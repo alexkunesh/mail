@@ -43,12 +43,6 @@ void JsonDeserializer::F32Value(std::float_t& value) { value = _stack.top()->Get
 
 void JsonDeserializer::F64Value(std::double_t& value) { value = _stack.top()->GetDouble(); }
 
-void JsonDeserializer::CharValue(char& value)
-{
-    // TODO: Throw an error if the string is longer than one character.
-    value = _stack.top()->GetString()[0];
-}
-
 void JsonDeserializer::StringValue(std::string& value)
 {
     auto        type   = _stack.top()->GetType();

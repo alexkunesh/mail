@@ -18,7 +18,6 @@ void JsonSerializer::U32Value(const std::uint32_t value) { _writer.Uint(value); 
 void JsonSerializer::U64Value(const std::uint64_t value) { _writer.Uint64(value); }
 void JsonSerializer::F32Value(const std::float_t value) { _writer.Double(value); }
 void JsonSerializer::F64Value(const std::double_t value) { _writer.Double(value); }
-void JsonSerializer::CharValue(const char value) { _writer.String(&value, 1, true); }
 void JsonSerializer::StringValue(const std::string& value) { _writer.String(value.data(), value.size(), true); }
 
 std::string JsonSerializer::ToString() const { return std::string(_buffer.GetString()); }

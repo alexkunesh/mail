@@ -40,8 +40,6 @@ void BinaryDeserializer::F32Value(std::float_t& value) { NumericValue(value); }
 
 void BinaryDeserializer::F64Value(std::double_t& value) { NumericValue(value); }
 
-void BinaryDeserializer::CharValue(char& value) { value = static_cast<char>(_buffer[++_cursor]); }
-
 void BinaryDeserializer::StringValue(std::string& value)
 {
     // Grab the length

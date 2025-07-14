@@ -46,8 +46,6 @@ void BinarySerializer::F32Value(std::float_t value) { NUMERIC_VALUE_IMPL }
 
 void BinarySerializer::F64Value(std::double_t value) { NUMERIC_VALUE_IMPL }
 
-void BinarySerializer::CharValue(char value) { _output.push_back(static_cast<std::byte>(value)); }
-
 void BinarySerializer::StringValue(const std::string& value)
 {
     U64Value(value.length());

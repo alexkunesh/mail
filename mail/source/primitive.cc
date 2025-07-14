@@ -21,8 +21,9 @@ MAIL_IMPL_PRIMITIVE(std::uint32_t, U32Value)
 MAIL_IMPL_PRIMITIVE(std::uint64_t, U64Value)
 MAIL_IMPL_PRIMITIVE(std::float_t, F32Value)
 MAIL_IMPL_PRIMITIVE(std::double_t, F64Value)
-MAIL_IMPL_PRIMITIVE(char, CharValue)
 MAIL_IMPL_PRIMITIVE(std::string, StringValue)
+
+// TODO: Implement char
 
 // namespace ser
 } // namespace mail

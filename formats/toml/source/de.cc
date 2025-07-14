@@ -39,8 +39,6 @@ void TomlDeserializer::F32Value(std::float_t& value) { value = _stack.top()->as_
 
 void TomlDeserializer::F64Value(std::double_t& value) { value = _stack.top()->as_floating(); }
 
-void TomlDeserializer::CharValue(char& value) { value = _stack.top()->as_string()[0]; }
-
 void TomlDeserializer::StringValue(std::string& value)
 {
     auto type = _stack.top()->type();

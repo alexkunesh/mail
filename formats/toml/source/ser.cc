@@ -51,8 +51,6 @@ void TomlSerializer::F32Value(std::float_t value) { _stack.top()->as_table()[_pe
 
 void TomlSerializer::F64Value(std::double_t value) { _stack.top()->as_table()[_pendingFieldName] = value; }
 
-void TomlSerializer::CharValue(char value) { _stack.top()->as_table()[_pendingFieldName] = value; }
-
 void TomlSerializer::StringValue(const std::string& value) { _stack.top()->as_table()[_pendingFieldName] = value; }
 
 std::string TomlSerializer::ToString() const

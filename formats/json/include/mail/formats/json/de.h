@@ -31,7 +31,6 @@ public:
     void U64Value(std::uint64_t& value) override;
     void F32Value(std::float_t& value) override;
     void F64Value(std::double_t& value) override;
-    void CharValue(char& value) override;
     void StringValue(std::string& value) override;
 };
 

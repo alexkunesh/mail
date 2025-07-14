@@ -45,9 +45,7 @@ public:
     virtual void U64Value(std::uint64_t& value)  = 0;
     virtual void F32Value(std::float_t& value)   = 0;
     virtual void F64Value(std::double_t& value)  = 0;
-    virtual void CharValue(char& value)          = 0;
     virtual void StringValue(std::string& value) = 0;
-    // virtual void BytesValue(std::span<std::uint8_t> value) = 0;
 
     // Utility functions
     template<typename T> void Field(const std::string& name, T& value)
