@@ -18,8 +18,8 @@ private:
 private:
     template<typename T> void NumericValue(T& value)
     {
-        std::span<std::byte, sizeof(T)> data = _buffer.subspan(_cursor, _cursor + sizeof(T));
-        value                                = FromBytes<T>(data);
+        std::span<std::byte, sizeof(T)> data(_buffer.data() + _cursor, sizeof(T));
+        value = FromBytes<T>(data);
 
         // Advance the cursor.
         _cursor += sizeof(T);

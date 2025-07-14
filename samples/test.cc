@@ -9,6 +9,7 @@
 #include <mail/formats/json/de.h>
 #include <mail/formats/json/ser.h>
 // #include <mail/formats/toml/de.h>
+#include <mail/formats/binary/de.h>
 #include <mail/formats/binary/ser.h>
 #include <mail/formats/toml/de.h>
 #include <mail/formats/toml/ser.h>
@@ -55,6 +56,24 @@ std::string ReadText(const std::filesystem::path& path)
     return sourceString;
 }
 
+std::vector<std::byte> ReadBytes(const std::filesystem::path& path)
+{
+    std::ifstream file = OpenFileRead(path, true);
+
+    // Grab file size to allocate enough memory.
+    file.seekg(0, std::ios::end);
+    const auto fileSize = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    std::vector<std::byte> buffer(fileSize);
+    if (!file.read(reinterpret_cast<char*>(buffer.data()), fileSize))
+    {
+        throw std::runtime_error(std::format("failed to read file: {}", path.string()));
+    }
+
+    return buffer;
+}
+
 void WriteBytes(const std::filesystem::path& path, const std::span<std::byte>& data)
 {
     auto file = OpenFileWrite(path, true);
@@ -96,10 +115,15 @@ int main()
     //
     // std::cout << data.text << "\n";
 
-    auto                   serialized = ReadText("test_data.toml");
-    Data                   data;
-    mail::TomlDeserializer deserializer(serialized);
-    deserializer.Value(data);
+    // auto                   serialized = ReadText("test_data.toml");
+    // Data                   data;
+    // mail::TomlDeserializer deserializer(serialized);
+    // deserializer.Value(data);
+    //
+    // std::cout << data.text << "\n";
 
-    std::cout << data.text << "\n";
+    auto                     serializedBytes = ReadBytes("output.bin");
+    Data                     data;
+    mail::BinaryDeserializer deserializer(serializedBytes);
+    deserializer.Value(data);
 }

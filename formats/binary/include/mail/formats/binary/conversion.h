@@ -70,7 +70,9 @@ T FromBytes(std::span<std::byte, sizeof(T)> input, const std::endian endianness 
     //     output |= static_cast<T>(input[i]) << (i * 8);
     // }
 
-    auto output = std::bit_cast<T>(input);
+    // auto output = std::bit_cast<T>(input);
+
+    auto output = *reinterpret_cast<T*>(input.data());
 
     return output;
 }
