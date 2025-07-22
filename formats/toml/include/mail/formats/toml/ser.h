@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <stack>
-#include <mail/ser.h>
+#include <mail/s/serializer.h>
 #include <toml.hpp>
 
 namespace mail

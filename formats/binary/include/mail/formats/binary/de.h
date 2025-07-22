@@ -4,7 +4,7 @@
 
 #include <bit>
 #include <span>
-#include <mail/de.h>
+#include <mail/d/de.h>
 
 namespace mail
 {

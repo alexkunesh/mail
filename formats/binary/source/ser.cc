@@ -55,6 +55,17 @@ void BinarySerializer::StringValue(const std::string& value)
     }
 }
 
+void BinarySerializer::BeginList(bool knownLength, std::size_t length)
+{
+    if (!knownLength)
+    {
+        // Write down the length of the list.
+        U64Value(static_cast<std::uint64_t>(length));
+    }
+}
+
+void BinarySerializer::EndList() {}
+
 std::span<std::byte> BinarySerializer::GetBytes() { return std::span(_output.begin(), _output.end()); }
 
 std::vector<std::byte> BinarySerializer::ToBytes()

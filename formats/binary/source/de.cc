@@ -45,6 +45,7 @@ void BinaryDeserializer::StringValue(std::string& value)
     // Grab the length
     uint64_t length;
     U64Value(length);
+    // TODO: Verify length is not larger than the rest of the buffer.
 
     value.assign(reinterpret_cast<const char*>(_buffer.data() + _cursor), length);
 }

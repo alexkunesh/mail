@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <mail/ser.h>
+#include <mail/s/serializer.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
@@ -31,6 +31,9 @@ public:
     void F32Value(std::float_t value) override;
     void F64Value(std::double_t value) override;
     void StringValue(const std::string& value) override;
+
+    void BeginList(bool knownSize, std::size_t length) override;
+    void EndList() override;
 
     // Outputs
     std::string ToString() const;

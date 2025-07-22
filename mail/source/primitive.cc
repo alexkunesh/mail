@@ -1,7 +1,7 @@
 ﻿#include <cstddef>
 #include <cmath>
-#include <mail/ser.h>
-#include <mail/de.h>
+#include <../include/mail/s/serializer.h>
+#include <../include/mail/d/de.h>
 
 
 #define MAIL_IMPL_PRIMITIVE(TYPE, FUNCTION)                                                                            \

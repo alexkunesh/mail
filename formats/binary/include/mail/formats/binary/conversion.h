@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <cstddef>
+#include <algorithm>
 #include <array>
 #include <bit>
 #include <type_traits>

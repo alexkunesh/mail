@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <stack>
-#include <mail/de.h>
+#include <mail/d/de.h>
 #include <rapidjson/document.h>
 
 namespace mail

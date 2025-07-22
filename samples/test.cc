@@ -2,17 +2,15 @@
 #include <iostream>
 #include <filesystem>
 #include <format>
+#include <fstream>
 #include <stdexcept>
 #include <sstream>
 
-#include <mail/ser.h>
+#include <mail/s/serializer.h>
 #include <mail/formats/json/de.h>
 #include <mail/formats/json/ser.h>
-// #include <mail/formats/toml/de.h>
 #include <mail/formats/binary/de.h>
 #include <mail/formats/binary/ser.h>
-#include <mail/formats/toml/de.h>
-#include <mail/formats/toml/ser.h>
 
 
 std::ofstream OpenFileWrite(const std::filesystem::path& path, bool binaryMode)
@@ -94,18 +92,53 @@ public:
     std::string     text;
 };
 
+class SimpleData
+{
+public:
+    std::int32_t a;
+
+    SimpleData(std::int32_t a) : a(a) {}
+};
+
+namespace mail
+{
+
+template<typename Serializer> void Serialize(Serializer& serializer, const SimpleData& value)
+{
+    serializer.BeginStruct();
+    serializer.Field("a", value.a);
+    serializer.EndStruct();
+}
+
+} // namespace mail
+
 int main()
 {
-    const Data data2 = {.more = {.cool = 3445, .veryCool = 345},
-                        .a    = 2,
-                        .b    = 3,
-                        .c    = 7,
-                        .d    = 8,
-                        .text = "hello, super cool binary format !"};
+    // std::vector<Data> datas;
+    // const Data        data2 = {.more = {.cool = 3445, .veryCool = 345},
+    //                            .a    = 2,
+    //                            .b    = 3,
+    //                            .c    = 7,
+    //                            .d    = 8,
+    //                            .text = "hello, super cool binary format !"};
+    // datas.push_back(data2);
+
+
+    // mail::BinarySerializer serializer;
+    // serializer.Value(datas);
+    // WriteBytes("output.bin", serializer.GetBytes());
+
+    // mail::JsonSerializer serializer;
+    // serializer.Value(datas);
+    // std::cout << serializer.ToString() << "\n";
+
+    std::array<SimpleData, 4> simpleDatas = {1, 2, 8, 3};
+
 
     mail::BinarySerializer serializer;
-    serializer.Value(data2);
+    serializer.Value(simpleDatas);
     WriteBytes("output.bin", serializer.GetBytes());
+
     // std::cout << serializer.ToString() << "\n";
 
     // auto serializedJson = R"({"a": 534, "b": 35234, "c": 1337, "d": 42069, "text": "Holy shit this works."})";
@@ -122,8 +155,8 @@ int main()
     //
     // std::cout << data.text << "\n";
 
-    auto                     serializedBytes = ReadBytes("output.bin");
-    Data                     data;
-    mail::BinaryDeserializer deserializer(serializedBytes);
-    deserializer.Value(data);
+    // auto                     serializedBytes = ReadBytes("output.bin");
+    // Data                     data;
+    // mail::BinaryDeserializer deserializer(serializedBytes);
+    // deserializer.Value(data);
 }

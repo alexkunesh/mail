@@ -3,15 +3,13 @@
 #include <cmath>
 #include <span>
 #include <string>
+#include <type_traits>
+
+#include "serialize.h"
+#include "serialize_std.h"
 
 namespace mail
 {
-
-/**
- * Serialization for simple types.
- * This specialization can be put inside of a translation unit.
- */
-template<typename T> void Serialize(class Serializer& serializer, const T& value);
 
 /**
  * Abstract class that defines the basic functionality of a serializer.
@@ -46,7 +44,10 @@ public:
     virtual void F32Value(std::float_t value)          = 0;
     virtual void F64Value(std::double_t value)         = 0;
     virtual void StringValue(const std::string& value) = 0;
-    // virtual void BytesValue(std::span<std::uint8_t> value) = 0;
+
+    // Lists
+    virtual void BeginList(bool knownLength, std::size_t length) = 0;
+    virtual void EndList()                                       = 0;
 
     // Utility functions
     template<typename T> void Field(const std::string& name, const T& value)

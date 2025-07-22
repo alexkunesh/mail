@@ -2,7 +2,7 @@
 #include <cstddef>
 #include <bit>
 #include <vector>
-#include <mail/ser.h>
+#include <mail/s/serializer.h>
 #include "config.h"
 
 namespace mail
@@ -21,8 +21,8 @@ private:
     BinaryConfiguration    _configuration;
 
 public:
-    BinarySerializer(std::size_t         allocateBytes = DefaultPreAllocationAmountBytes,
-                     BinaryConfiguration configuration = {});
+    explicit BinarySerializer(std::size_t         allocateBytes = DefaultPreAllocationAmountBytes,
+                              BinaryConfiguration configuration = {});
 
     void BeginStruct() override;
     void BeginField(const std::string& name) override;
@@ -41,6 +41,9 @@ public:
     void F32Value(std::float_t value) override;
     void F64Value(std::double_t value) override;
     void StringValue(const std::string& value) override;
+
+    void BeginList(bool knownLength, std::size_t length) override;
+    void EndList() override;
 
     // Outputs
     std::span<std::byte>   GetBytes();
