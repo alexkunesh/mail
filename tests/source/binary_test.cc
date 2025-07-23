@@ -1,14 +1,14 @@
-#include "mail/d/deserializer.h"
-#include "mail/formats/binary/deserializer.h"
-#include "mail/formats/binary/ser.h"
-
-
 #include <string>
 #include <span>
 #include <gtest/gtest.h>
+
 #include <mail/s/serialize.h>
 #include <mail/s/serialize_std.h>
 #include <mail/formats/binary/conversion.h>
+#include <mail/formats/binary/ser.h>
+#include <mail/formats/binary/deserializer.h>
+
+#include "data.h"
 
 #define B(x) static_cast<std::byte>(x)
 
@@ -56,46 +56,6 @@ TEST(BinaryConversion, FromBytes)
     ASSERT_EQ(mail::FromBytes<std::int64_t>(i64bytesBE, std::endian::big), i64TestValue);
     ASSERT_EQ(mail::FromBytes<std::int64_t>(i64bytesLE, std::endian::little), i64TestValue);
 }
-
-class TestDataA
-{
-public:
-    std::int32_t            a, b;
-    std::string             text;
-    std::array<uint16_t, 4> fourShorts;
-    std::vector<uint32_t>   dynamicUnsignedInts;
-};
-
-namespace mail
-{
-
-template<> void Serialize(mail::Serializer& serializer, const TestDataA& value)
-{
-    serializer.BeginStruct();
-
-    serializer.Field("a", value.a);
-    serializer.Field("b", value.b);
-    serializer.Field("text", value.text);
-    serializer.Field("fourShorts", value.fourShorts);
-    serializer.Field("dynamicUnsignedInts", value.dynamicUnsignedInts);
-
-    serializer.EndStruct();
-}
-
-template<> void Deserialize(Deserializer& deserializer, TestDataA& value)
-{
-    deserializer.BeginStruct();
-
-    deserializer.Field("a", value.a);
-    deserializer.Field("b", value.b);
-    deserializer.Field("text", value.text);
-    deserializer.Field("fourShorts", value.fourShorts);
-    deserializer.Field("dynamicUnsignedInts", value.dynamicUnsignedInts);
-
-    deserializer.EndStruct();
-}
-
-} // namespace mail
 
 std::array TestDataA1{B(0xAA), B(0x24), B(0x08), B(0x00), B(0x39), B(0x82), B(0xCE), B(0xFF), B(0x1D), B(0x00), B(0x00),
                       B(0x00), B(0x00), B(0x00), B(0x00), B(0x00), B(0x45), B(0x61), B(0x73), B(0x74), B(0x65), B(0x72),
