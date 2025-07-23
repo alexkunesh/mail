@@ -5,6 +5,16 @@ set(CMAKE_CXX_STANDARD 20)
 
 include(FetchContent)
 
+# Enable testing
+if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    include(CTest)
+
+    # Add tests directory if BUILD_TESTING is enabled.
+    if (BUILD_TESTING)
+        add_subdirectory("tests")
+    endif ()
+endif ()
+
 add_subdirectory("mail")
 add_subdirectory("formats/binary")
 add_subdirectory("formats/json")
