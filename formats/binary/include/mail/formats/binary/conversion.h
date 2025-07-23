@@ -52,7 +52,7 @@ std::array<std::byte, sizeof(T)> ToBytes(T input, const std::endian endianness =
  * @return The numeric representation of the input.
  */
 template<typename T>
-T FromBytes(std::span<std::byte, sizeof(T)> input, const std::endian endianness = std::endian::native)
+T FromBytes(const std::span<std::byte, sizeof(T)>& input, const std::endian endianness = std::endian::native)
 {
     static_assert(std::is_arithmetic_v<T>); // Only accept integers and floating point numbers.
 
