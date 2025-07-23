@@ -1,5 +1,13 @@
+#include "mail/d/deserializer.h"
+#include "mail/formats/binary/deserializer.h"
+#include "mail/formats/binary/ser.h"
+
+
+#include <string>
 #include <span>
 #include <gtest/gtest.h>
+#include <mail/s/serialize.h>
+#include <mail/s/serialize_std.h>
 #include <mail/formats/binary/conversion.h>
 
 #define B(x) static_cast<std::byte>(x)
@@ -47,4 +55,80 @@ TEST(BinaryConversion, FromBytes)
 
     ASSERT_EQ(mail::FromBytes<std::int64_t>(i64bytesBE, std::endian::big), i64TestValue);
     ASSERT_EQ(mail::FromBytes<std::int64_t>(i64bytesLE, std::endian::little), i64TestValue);
+}
+
+class TestDataA
+{
+public:
+    std::int32_t            a, b;
+    std::string             text;
+    std::array<uint16_t, 4> fourShorts;
+    std::vector<uint32_t>   dynamicUnsignedInts;
+};
+
+namespace mail
+{
+
+template<> void Serialize(mail::Serializer& serializer, const TestDataA& value)
+{
+    serializer.BeginStruct();
+
+    serializer.Field("a", value.a);
+    serializer.Field("b", value.b);
+    serializer.Field("text", value.text);
+    serializer.Field("fourShorts", value.fourShorts);
+    serializer.Field("dynamicUnsignedInts", value.dynamicUnsignedInts);
+
+    serializer.EndStruct();
+}
+
+template<> void Deserialize(Deserializer& deserializer, TestDataA& value)
+{
+    deserializer.BeginStruct();
+
+    deserializer.Field("a", value.a);
+    deserializer.Field("b", value.b);
+    deserializer.Field("text", value.text);
+    deserializer.Field("fourShorts", value.fourShorts);
+    deserializer.Field("dynamicUnsignedInts", value.dynamicUnsignedInts);
+
+    deserializer.EndStruct();
+}
+
+} // namespace mail
+
+std::array TestDataA1{B(0xAA), B(0x24), B(0x08), B(0x00), B(0x39), B(0x82), B(0xCE), B(0xFF), B(0x1D), B(0x00), B(0x00),
+                      B(0x00), B(0x00), B(0x00), B(0x00), B(0x00), B(0x45), B(0x61), B(0x73), B(0x74), B(0x65), B(0x72),
+                      B(0x20), B(0x70), B(0x69), B(0x6E), B(0x6B), B(0x20), B(0x63), B(0x6F), B(0x6C), B(0x6F), B(0x72),
+                      B(0x73), B(0x2C), B(0x20), B(0x72), B(0x61), B(0x63), B(0x65), B(0x20), B(0x63), B(0x61), B(0x72),
+                      B(0x73), B(0x2B), B(0x02), B(0xDF), B(0x12), B(0x60), B(0xEA), B(0x09), B(0x00), B(0x03), B(0x00),
+                      B(0x00), B(0x00), B(0x00), B(0x00), B(0x00), B(0x00), B(0x7F), B(0x30), B(0x04), B(0x5A), B(0xAA),
+                      B(0xF8), B(0xCC), B(0x00), B(0x32), B(0x56), B(0x88), B(0x90)};
+
+
+const TestDataA ExampleTestData{.a                   = 533674,
+                                .b                   = -3243463,
+                                .text                = "Easter pink colors, race cars",
+                                .fourShorts          = {555, 4831, 60000, 9},
+                                .dynamicUnsignedInts = {1510223999, 13433002, 2424854066}};
+
+TEST(TestDataA, Serialization)
+{
+    mail::BinarySerializer serializer;
+    serializer.Value(ExampleTestData);
+    auto serializerBytes = serializer.ToBytes();
+    ASSERT_TRUE(std::equal(serializerBytes.begin(), serializerBytes.end(), TestDataA1.begin()));
+}
+
+TEST(TestDataA, Deserialization)
+{
+    mail::BinaryDeserializer deserializer(TestDataA1);
+    TestDataA                deserializedData;
+    deserializer.Value(deserializedData);
+
+    ASSERT_EQ(deserializedData.a, ExampleTestData.a);
+    ASSERT_EQ(deserializedData.b, ExampleTestData.b);
+    ASSERT_EQ(deserializedData.text, ExampleTestData.text);
+    ASSERT_EQ(deserializedData.fourShorts, ExampleTestData.fourShorts);
+    ASSERT_EQ(deserializedData.dynamicUnsignedInts, ExampleTestData.dynamicUnsignedInts);
 }
