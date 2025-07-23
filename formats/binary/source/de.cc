@@ -1,4 +1,4 @@
-﻿#include <mail/formats/binary/de.h>
+﻿#include <mail/formats/binary/deserializer.h>
 
 namespace mail
 {
@@ -49,5 +49,17 @@ void BinaryDeserializer::StringValue(std::string& value)
 
     value.assign(reinterpret_cast<const char*>(_buffer.data() + _cursor), length);
 }
+
+void BinaryDeserializer::BeginList(bool knownLength, std::size_t& length)
+{
+    if (knownLength)
+    {
+        U64Value(length);
+    }
+}
+
+void BinaryDeserializer::TraverseList() {}
+
+void BinaryDeserializer::EndList() {}
 
 } // namespace mail

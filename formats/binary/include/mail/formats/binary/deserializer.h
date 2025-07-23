@@ -1,19 +1,32 @@
 ﻿#pragma once
-#include <stack>
-#include <mail/d/de.h>
-#include <toml.hpp>
+
+#include <bit>
+#include <span>
+#include <mail/d/deserializer.h>
+
+#include "conversion.h"
 
 namespace mail
 {
 
-class TomlDeserializer : public Deserializer
+class BinaryDeserializer : public Deserializer
 {
 private:
-    toml::value              _document;
-    std::stack<toml::value*> _stack;
+    std::span<std::byte> _buffer;
+    std::size_t          _cursor;
+
+private:
+    template<typename T> void NumericValue(T& value)
+    {
+        std::span<std::byte, sizeof(T)> data(_buffer.data() + _cursor, sizeof(T));
+        value = FromBytes<T>(data);
+
+        // Advance the cursor.
+        _cursor += sizeof(T);
+    }
 
 public:
-    explicit TomlDeserializer(const std::string& input);
+    explicit BinaryDeserializer(const std::span<std::byte>& input);
 
     void BeginStruct() override;
     void BeginField(const std::string& name) override;
@@ -32,6 +45,10 @@ public:
     void F32Value(std::float_t& value) override;
     void F64Value(std::double_t& value) override;
     void StringValue(std::string& value) override;
+
+    void BeginList(bool knownLength, std::size_t& length) override;
+    void TraverseList() override;
+    void EndList() override;
 };
 
 } // namespace mail

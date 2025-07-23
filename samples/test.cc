@@ -7,9 +7,9 @@
 #include <sstream>
 
 #include <mail/s/serializer.h>
-#include <mail/formats/json/de.h>
+#include <mail/formats/json/deserializer.h>
 #include <mail/formats/json/ser.h>
-#include <mail/formats/binary/de.h>
+#include <mail/formats/binary/deserializer.h>
 #include <mail/formats/binary/ser.h>
 
 

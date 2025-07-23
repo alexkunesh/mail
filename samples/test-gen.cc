@@ -1,5 +1,5 @@
 ﻿#include <cstdint>
-#include <mail/d/de.h>
+#include <mail/d/deserializer.h>
 #include <mail/s/serializer.h>
 
 class NestedStructure

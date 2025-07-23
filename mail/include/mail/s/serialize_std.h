@@ -1,8 +1,8 @@
 #pragma once
+
 #include <array>
 #include <vector>
 
-#include "serializer.h"
 #include "serialize.h"
 
 namespace mail

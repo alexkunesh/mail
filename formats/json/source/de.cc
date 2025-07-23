@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include <mail/formats/json/de.h>
+#include <mail/formats/json/deserializer.h>
 namespace mail
 {
 
@@ -43,12 +43,33 @@ void JsonDeserializer::F32Value(std::float_t& value) { value = _stack.top()->Get
 
 void JsonDeserializer::F64Value(std::double_t& value) { value = _stack.top()->GetDouble(); }
 
-void JsonDeserializer::StringValue(std::string& value)
-{
-    auto        type   = _stack.top()->GetType();
-    const char* string = _stack.top()->GetString();
+void JsonDeserializer::StringValue(std::string& value) { value = std::string(_stack.top()->GetString()); }
 
-    value = std::string(_stack.top()->GetString());
+// TODO: List deserialization.
+void JsonDeserializer::BeginList(bool knownLength, std::size_t& length)
+{
+    _stack.push(&_stack.top()->GetArray()[0]);
+    _listStack.push(0);
+}
+
+void JsonDeserializer::TraverseList()
+{
+    // Get the current index of the current list, increment it by one, and push it to the value stack.
+    const std::size_t index = _listStack.top() + 1;
+
+    // Modify _listStack
+    _listStack.pop();
+    _listStack.push(index);
+
+    // Adjust _stack accordingly.
+    _stack.pop();
+    _stack.push(&_stack.top()->GetArray()[index]);
+}
+
+void JsonDeserializer::EndList()
+{
+    _stack.pop();
+    _listStack.pop();
 }
 
 } // namespace mail

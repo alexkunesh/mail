@@ -1,19 +1,19 @@
 ﻿#pragma once
 #include <stack>
-#include <mail/d/de.h>
-#include <rapidjson/document.h>
+#include <mail/d/deserializer.h>
+#include <toml.hpp>
 
 namespace mail
 {
 
-class JsonDeserializer : public Deserializer
+class TomlDeserializer : public Deserializer
 {
 private:
-    rapidjson::Document           _document;
-    std::stack<rapidjson::Value*> _stack;
+    toml::value              _document;
+    std::stack<toml::value*> _stack;
 
 public:
-    explicit JsonDeserializer(const std::string& input);
+    explicit TomlDeserializer(const std::string& input);
 
     void BeginStruct() override;
     void BeginField(const std::string& name) override;

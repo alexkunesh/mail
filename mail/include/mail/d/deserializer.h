@@ -4,14 +4,10 @@
 #include <span>
 #include <string>
 
+#include "deserialize.h"
+
 namespace mail
 {
-
-/**
- * Deserialization for simple types.
- * This specialization can be put inside of a translation unit.
- */
-template<typename T> void Deserialize(class Deserializer& serializer, T& value);
 
 /**
  * Abstract class that defines the basic functionality of a deserializer.
@@ -46,6 +42,11 @@ public:
     virtual void F32Value(std::float_t& value)   = 0;
     virtual void F64Value(std::double_t& value)  = 0;
     virtual void StringValue(std::string& value) = 0;
+
+    // Lists
+    virtual void BeginList(bool knownLength, std::size_t& length) = 0;
+    virtual void TraverseList()                                   = 0;
+    virtual void EndList()                                        = 0;
 
     // Utility functions
     template<typename T> void Field(const std::string& name, T& value)

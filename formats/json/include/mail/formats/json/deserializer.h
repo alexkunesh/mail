@@ -1,32 +1,20 @@
 ﻿#pragma once
-#include "conversion.h"
-
-
-#include <bit>
-#include <span>
-#include <mail/d/de.h>
+#include <stack>
+#include <mail/d/deserializer.h>
+#include <rapidjson/document.h>
 
 namespace mail
 {
 
-class BinaryDeserializer : public Deserializer
+class JsonDeserializer : public Deserializer
 {
 private:
-    std::span<std::byte> _buffer;
-    std::size_t          _cursor;
-
-private:
-    template<typename T> void NumericValue(T& value)
-    {
-        std::span<std::byte, sizeof(T)> data(_buffer.data() + _cursor, sizeof(T));
-        value = FromBytes<T>(data);
-
-        // Advance the cursor.
-        _cursor += sizeof(T);
-    }
+    rapidjson::Document           _document;
+    std::stack<rapidjson::Value*> _stack;
+    std::stack<std::size_t>       _listStack;
 
 public:
-    explicit BinaryDeserializer(const std::span<std::byte>& input);
+    explicit JsonDeserializer(const std::string& input);
 
     void BeginStruct() override;
     void BeginField(const std::string& name) override;
@@ -45,6 +33,10 @@ public:
     void F32Value(std::float_t& value) override;
     void F64Value(std::double_t& value) override;
     void StringValue(std::string& value) override;
+
+    void BeginList(bool knownLength, std::size_t& length) override;
+    void TraverseList() override;
+    void EndList() override;
 };
 
 } // namespace mail
