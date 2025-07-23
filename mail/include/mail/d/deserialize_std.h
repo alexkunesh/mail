@@ -33,4 +33,23 @@ template<typename Deserializer, typename T2> void Deserialize(Deserializer& dese
     deserializer.EndList();
 }
 
+template<typename Deserializer, typename T2, std::size_t Length>
+void Deserialize(Deserializer& deserializer, std::array<T2, Length>& value)
+{
+    std::size_t _;
+    deserializer.BeginList(true, _); // We don't need the length; we know it at compile time.
+
+    for (std::size_t i = 0; i < Length; i++)
+    {
+        Deserialize(deserializer, value[i]);
+
+        if (i != Length - 1)
+        {
+            deserializer.TraverseList();
+        }
+    }
+
+    deserializer.EndList();
+}
+
 } // namespace mail
