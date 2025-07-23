@@ -65,13 +65,6 @@ std::array TestDataA1{B(0xAA), B(0x24), B(0x08), B(0x00), B(0x39), B(0x82), B(0x
                       B(0x00), B(0x00), B(0x00), B(0x00), B(0x00), B(0x00), B(0x7F), B(0x30), B(0x04), B(0x5A), B(0xAA),
                       B(0xF8), B(0xCC), B(0x00), B(0x32), B(0x56), B(0x88), B(0x90)};
 
-
-const TestDataA ExampleTestData{.a                   = 533674,
-                                .b                   = -3243463,
-                                .text                = "Easter pink colors, race cars",
-                                .fourShorts          = {555, 4831, 60000, 9},
-                                .dynamicUnsignedInts = {1510223999, 13433002, 2424854066}};
-
 TEST(TestDataA, Serialization)
 {
     mail::BinarySerializer serializer;
