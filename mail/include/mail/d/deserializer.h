@@ -5,6 +5,7 @@
 #include <string>
 
 #include "deserialize.h"
+#include "deserialize_std.h"
 
 namespace mail
 {
