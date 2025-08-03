@@ -11,6 +11,7 @@
 namespace mail
 {
 
+MAIL_IMPL_PRIMITIVE(bool, BoolValue)
 MAIL_IMPL_PRIMITIVE(std::int8_t, I8Value)
 MAIL_IMPL_PRIMITIVE(std::int16_t, I16Value)
 MAIL_IMPL_PRIMITIVE(std::int32_t, I32Value)
