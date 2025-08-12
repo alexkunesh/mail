@@ -24,6 +24,15 @@ MAIL_IMPL_PRIMITIVE(std::float_t, F32Value)
 MAIL_IMPL_PRIMITIVE(std::double_t, F64Value)
 MAIL_IMPL_PRIMITIVE(std::string, StringValue)
 
+template<> void Serialize(Serializer& serializer, const std::byte& value)
+{
+    serializer.U8Value(static_cast<std::uint8_t>(value));
+}
+template<> void Deserialize(Deserializer& deserializer, std::byte& value)
+{
+    deserializer.U8Value(reinterpret_cast<std::uint8_t&>(value));
+}
+
 // TODO: Implement char
 
 // namespace ser
