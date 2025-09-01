@@ -55,7 +55,9 @@ void BinaryDeserializer::BeginList(bool knownLength, std::size_t& length)
 {
     if (!knownLength)
     {
-        U64Value(length);
+        std::uint64_t temp;
+        U64Value(temp);
+        length = static_cast<std::size_t>(temp);
     }
 }
 
