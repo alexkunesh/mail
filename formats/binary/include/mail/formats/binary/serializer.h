@@ -10,19 +10,12 @@ namespace mail
 
 class BinarySerializer final : public Serializer
 {
-public:
-    /**
-     * By default, the serializer will allocate this amount of memory (in bytes).
-     */
-    static constexpr std::size_t DefaultPreAllocationAmountBytes = 2048;
-
 private:
-    std::vector<std::byte> _output;
-    BinaryConfiguration    _configuration;
+    std::vector<std::byte>     _output;
+    const BinaryConfiguration& _configuration;
 
 public:
-    explicit BinarySerializer(std::size_t         allocateBytes = DefaultPreAllocationAmountBytes,
-                              BinaryConfiguration configuration = {});
+    explicit BinarySerializer(const BinaryConfiguration& configuration = DefaultBinaryConfiguration);
 
     void BeginStruct() override;
     void BeginField(const std::string& name) override;

@@ -1,13 +1,12 @@
-﻿#include <mail/formats/binary/ser.h>
+﻿#include <mail/formats/binary/serializer.h>
 #include <mail/formats/binary/conversion.h>
 
 namespace mail
 {
 
-BinarySerializer::BinarySerializer(const std::size_t allocateBytes, const BinaryConfiguration configuration) :
-    _configuration(configuration)
+BinarySerializer::BinarySerializer(const BinaryConfiguration& configuration) : _configuration(configuration)
 {
-    _output.reserve(allocateBytes);
+    _output.reserve(configuration.PreallocationSize);
 }
 
 // As this format is not self-describing, we can leave these function implementations blank.

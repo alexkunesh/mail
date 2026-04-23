@@ -8,9 +8,9 @@
 
 #include <mail/s/serializer.h>
 #include <mail/formats/json/deserializer.h>
-#include <mail/formats/json/ser.h>
+#include <mail/formats/json/serializer.h>
 #include <mail/formats/binary/deserializer.h>
-#include <mail/formats/binary/ser.h>
+#include <mail/formats/binary/serializer.h>
 
 
 std::ofstream OpenFileWrite(const std::filesystem::path& path, bool binaryMode)
