@@ -1,18 +1,35 @@
 ﻿#pragma once
+#include <sstream>
+#include <stack>
 #include <mail/s/serializer.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
 
 namespace mail
 {
 class JsonSerializer final : public Serializer
 {
 private:
-    rapidjson::StringBuffer                    _buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> _writer;
+    enum class Context
+    {
+        None,
+        Struct,
+        Field,
+        List,
+    };
+
+    std::ostringstream  _outputStream;
+    bool                _pendingComma = false;
+    std::stack<Context> _contextStack;
+
+    Context CurrentContext() const;
+    void    PushContext(Context);
+    void    PopContext();
+
+    void TryAddLastCommaInLists();
+
 
 public:
-    JsonSerializer() : _writer(_buffer) {}
+    JsonSerializer() {}
+    static std::string EscapeString(const std::string& input);
 
     void BeginStruct() override;
     void BeginField(const std::string& name) override;

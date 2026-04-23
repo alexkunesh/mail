@@ -12,7 +12,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 file(GLOB_RECURSE SOURCES "source/*.cc")
 add_executable(${PROJECT_NAME}_tests ${SOURCES})
-target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME} ${PROJECT_NAME}_binary GTest::gtest_main)
+target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME} ${PROJECT_NAME}_binary ${PROJECT_NAME}_json GTest::gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME}_tests)
