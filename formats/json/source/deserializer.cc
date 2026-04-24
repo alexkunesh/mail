@@ -43,6 +43,10 @@ void JsonDeserializer::F32Value(std::float_t& value) { value = _stack.top()->Get
 
 void JsonDeserializer::F64Value(std::double_t& value) { value = _stack.top()->GetDouble(); }
 
+void JsonDeserializer::UnsignedCharValue(unsigned char& value) { value = _stack.top()->GetString()[0]; }
+
+void JsonDeserializer::CharValue(char& value) { value = _stack.top()->GetString()[0]; }
+
 void JsonDeserializer::StringValue(std::string& value) { value = std::string(_stack.top()->GetString()); }
 
 // TODO: List deserialization.

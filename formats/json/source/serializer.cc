@@ -143,16 +143,19 @@ void JsonSerializer::U8Value(const std::uint8_t value)
     TryAddLastCommaInLists();
     _outputStream << std::to_string(value);
 }
+
 void JsonSerializer::U16Value(const std::uint16_t value)
 {
     TryAddLastCommaInLists();
     _outputStream << std::to_string(value);
 }
+
 void JsonSerializer::U32Value(const std::uint32_t value)
 {
     TryAddLastCommaInLists();
     _outputStream << std::to_string(value);
 }
+
 void JsonSerializer::U64Value(const std::uint64_t value)
 {
     TryAddLastCommaInLists();
@@ -164,11 +167,25 @@ void JsonSerializer::F32Value(const std::float_t value)
     TryAddLastCommaInLists();
     _outputStream << std::to_string(value);
 }
+
 void JsonSerializer::F64Value(const std::double_t value)
 {
     TryAddLastCommaInLists();
     _outputStream << std::to_string(value);
 }
+
+void JsonSerializer::UnsignedCharValue(const unsigned char value)
+{
+    TryAddLastCommaInLists();
+    _outputStream << "\"" << value << "\"";
+}
+
+void JsonSerializer::CharValue(char value)
+{
+    TryAddLastCommaInLists();
+    _outputStream << "\"" << value << "\"";
+}
+
 
 void JsonSerializer::StringValue(const std::string& value)
 {

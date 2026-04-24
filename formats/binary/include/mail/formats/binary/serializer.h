@@ -33,6 +33,9 @@ public:
     void U64Value(std::uint64_t value) override;
     void F32Value(std::float_t value) override;
     void F64Value(std::double_t value) override;
+
+    void UnsignedCharValue(unsigned char value) override;
+    void CharValue(char value) override;
     void StringValue(const std::string& value) override;
 
     void BeginList(bool knownLength, std::size_t length) override;

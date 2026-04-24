@@ -28,6 +28,7 @@ template<> void Serialize(Serializer& serializer, const std::byte& value)
 {
     serializer.U8Value(static_cast<std::uint8_t>(value));
 }
+
 template<> void Deserialize(Deserializer& deserializer, std::byte& value)
 {
     deserializer.U8Value(reinterpret_cast<std::uint8_t&>(value));
