@@ -3,7 +3,8 @@
 namespace mail
 {
 
-BinaryDeserializer::BinaryDeserializer(const std::span<std::byte>& input)
+BinaryDeserializer::BinaryDeserializer(const std::span<std::byte>& input, const BinaryConfiguration& configuration) :
+    _configuration(configuration)
 {
     _buffer = input;
     _cursor = 0;

@@ -5,6 +5,7 @@
 #include <mail/deserializer.h>
 
 #include "conversion.h"
+#include "config.h"
 
 namespace mail
 {
@@ -12,21 +13,23 @@ namespace mail
 class BinaryDeserializer : public Deserializer
 {
 private:
-    std::span<std::byte> _buffer;
-    std::size_t          _cursor;
+    std::span<std::byte>       _buffer;
+    std::size_t                _cursor;
+    const BinaryConfiguration& _configuration;
 
 private:
     template<typename T> void NumericValue(T& value)
     {
         std::span<std::byte, sizeof(T)> data(_buffer.data() + _cursor, sizeof(T));
-        value = FromBytes<T>(data);
+        value = FromBytes<T>(data, _configuration.Endianness);
 
         // Advance the cursor.
         _cursor += sizeof(T);
     }
 
 public:
-    explicit BinaryDeserializer(const std::span<std::byte>& input);
+    BinaryDeserializer(const std::span<std::byte>& input,
+                       const BinaryConfiguration&  configuration = DefaultBinaryConfiguration);
 
     void BeginStruct() override;
     void BeginField(const std::string& name) override;
