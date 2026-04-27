@@ -1,6 +1,6 @@
 ﻿#include <cstdint>
-#include <mail/d/deserializer.h>
-#include <mail/s/serializer.h>
+#include <../mail/include/mail/deserializer.h>
+#include <../mail/include/mail/serializer.h>
 
 class NestedStructure
 {

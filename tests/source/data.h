@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
-#include <mail/s/serializer.h>
-#include <mail/d/deserializer.h>
+#include <mail/serializer.h>
+#include <mail/deserializer.h>
 
 class TestDataA
 {

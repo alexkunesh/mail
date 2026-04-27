@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <sstream>
 
-#include <mail/s/serializer.h>
+#include <../mail/include/mail/serializer.h>
 #include <mail/formats/json/deserializer.h>
 #include <mail/formats/json/serializer.h>
 #include <mail/formats/binary/deserializer.h>

@@ -2,7 +2,7 @@
 #include <cstddef>
 #include <bit>
 #include <vector>
-#include <mail/s/serializer.h>
+#include <mail/serializer.h>
 #include "config.h"
 
 namespace mail

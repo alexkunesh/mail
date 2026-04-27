@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <sstream>
 #include <stack>
-#include <mail/s/serializer.h>
+#include <mail/serializer.h>
 
 namespace mail
 {

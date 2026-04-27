@@ -2,7 +2,7 @@
 
 #include <bit>
 #include <span>
-#include <mail/d/deserializer.h>
+#include <mail/deserializer.h>
 
 #include "conversion.h"
 

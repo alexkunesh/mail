@@ -2,8 +2,8 @@
 #include <span>
 #include <gtest/gtest.h>
 
-#include <mail/s/serialize.h>
-#include <mail/s/serialize_std.h>
+#include <mail/serialize.h>
+#include <mail/serialize_std.h>
 #include <mail/formats/binary/conversion.h>
 #include <mail/formats/binary/serializer.h>
 #include <mail/formats/binary/deserializer.h>
