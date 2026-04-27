@@ -3,6 +3,7 @@
 
 #include <mail/formats/json/tokenizer.h>
 
+// *sigh* no wildcard in using statements :(
 using mail::JsonTokenType::Colon;
 using mail::JsonTokenType::Comma;
 using mail::JsonTokenType::End;
@@ -31,6 +32,11 @@ TEST(JsonTokenizer, ScanNumber)
 TEST(JsonTokenizer, ScanNumberLeadingPeriodFails)
 {
     ASSERT_THAT(mail::JsonTokenizer(".0").GetTokenTypes(), ElementsAre(Error, End));
+}
+
+TEST(JsonTokenizer, ScanNumberProperlyTerminates)
+{
+    ASSERT_THAT(mail::JsonTokenizer("24325.2723f").GetTokenTypes(), ElementsAre(Float, Error, End));
 }
 
 TEST(JsonTokenizer, ScanString)

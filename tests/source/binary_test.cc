@@ -4,9 +4,7 @@
 
 #include <mail/serialize.h>
 #include <mail/serialize_std.h>
-#include <mail/formats/binary/conversion.h>
-#include <mail/formats/binary/serializer.h>
-#include <mail/formats/binary/deserializer.h>
+#include <mail/formats/binary.h>
 
 #include "data.h"
 
@@ -67,17 +65,13 @@ std::array TestDataA1{B(0xAA), B(0x24), B(0x08), B(0x00), B(0x39), B(0x82), B(0x
 
 TEST(TestDataA, BinarySerialization)
 {
-    mail::BinarySerializer serializer;
-    serializer.Value(ExampleTestData);
-    auto serializerBytes = serializer.ToBytes();
+    auto serializerBytes = mail::ToBinary(ExampleTestData);
     ASSERT_TRUE(std::equal(serializerBytes.begin(), serializerBytes.end(), TestDataA1.begin()));
 }
 
 TEST(TestDataA, BinaryDeserialization)
 {
-    mail::BinaryDeserializer deserializer(TestDataA1);
-    TestDataA                deserializedData;
-    deserializer.Value(deserializedData);
+    const auto deserializedData = mail::FromBinary<TestDataA>(TestDataA1);
 
     ASSERT_EQ(deserializedData.a, ExampleTestData.a);
     ASSERT_EQ(deserializedData.b, ExampleTestData.b);

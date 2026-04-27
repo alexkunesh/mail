@@ -5,8 +5,6 @@
 #include <mail/formats/json.h>
 
 #include "data.h"
-//     .fourShorts          = {555, 4831, 60000, 9},
-//     .dynamicUnsignedInts = {1510223999, 13433002, 2424854066}};
 
 const std::string ExampleTestDataJson =
         "{\"a\":533674,\"b\":-3243463,\"text\":\"Easter pink colors, race "

@@ -1,4 +1,5 @@
-﻿#include <mail/formats/binary/conversion.h>
+﻿#include <cstdint>
+#include <mail/formats/binary/conversion.h>
 
 int main()
 {
